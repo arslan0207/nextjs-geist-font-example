@@ -16,6 +16,8 @@ interface Worker {
   email: string
   hourlyRate: number
   joinDate: string
+  isCredit?: boolean
+  creditRef?: string
 }
 
 interface Attendance {
@@ -46,7 +48,9 @@ export default function LaborPage() {
     contactNumber: "",
     email: "",
     hourlyRate: 0,
-    joinDate: ""
+    joinDate: "",
+    isCredit: false,
+    creditRef: ""
   })
 
   const handleAddWorker = () => {
@@ -62,10 +66,13 @@ export default function LaborPage() {
         contactNumber: "",
         email: "",
         hourlyRate: 0,
-        joinDate: ""
+        joinDate: "",
+        isCredit: false,
+        creditRef: ""
       })
     }
   }
+
 
   const [newAttendance, setNewAttendance] = useState<Attendance>({
     workerId: "",
