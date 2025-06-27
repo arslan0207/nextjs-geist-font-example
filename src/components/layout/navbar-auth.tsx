@@ -13,6 +13,7 @@ export function Navbar() {
   const navigation = [
     { name: "Dashboard", href: "/" },
     { name: "Customers", href: "/customers" },
+    { name: "Suppliers", href: "/suppliers" },
     { name: "Invoices", href: "/invoices" },
     { name: "Quotations", href: "/quotations" },
     { name: "LPO", href: "/lpo" },
