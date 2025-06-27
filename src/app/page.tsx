@@ -42,6 +42,11 @@ export default function Home() {
       href: "/materials"
     },
     {
+      title: "Suppliers",
+      description: "Manage suppliers and their details",
+      href: "/suppliers"
+    },
+    {
       title: "Reports",
       description: "Generate financial reports and tax calculations",
       href: "/reports"
