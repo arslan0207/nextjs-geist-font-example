@@ -18,6 +18,8 @@ interface Material {
   unitPrice: number
   quantity: number
   minimumStock: number
+  isCredit?: boolean
+  creditRef?: string
 }
 
 interface MaterialTransaction {
@@ -65,10 +67,13 @@ export default function MaterialsPage() {
         unit: "",
         unitPrice: 0,
         quantity: 0,
-        minimumStock: 0
+        minimumStock: 0,
+        isCredit: false,
+        creditRef: ""
       })
     }
   }
+
 
   const handleAddTransaction = () => {
     if (newTransaction.materialId && newTransaction.quantity > 0) {
