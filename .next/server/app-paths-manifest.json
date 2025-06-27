@@ -7,7 +7,8 @@
   "/lpo/page": "app/lpo/page.js",
   "/materials/page": "app/materials/page.js",
   "/page": "app/page.js",
+  "/projects/page": "app/projects/page.js",
   "/quotations/page": "app/quotations/page.js",
   "/reports/page": "app/reports/page.js",
-  "/projects/page": "app/projects/page.js"
+  "/suppliers/page": "app/suppliers/page.js"
 }
