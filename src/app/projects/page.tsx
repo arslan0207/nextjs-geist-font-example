@@ -13,6 +13,8 @@ interface ProjectExpense {
   description: string
   category: string
   amount: number
+  isCredit?: boolean
+  creditRef?: string
 }
 
 interface LaborCost {
@@ -21,6 +23,8 @@ interface LaborCost {
   hours: number
   rate: number
   amount: number
+  isCredit?: boolean
+  creditRef?: string
 }
 
 export default function ProjectsPage() {
@@ -45,9 +49,19 @@ export default function ProjectsPage() {
       setNewExpense({
         description: "",
         category: "",
-        amount: 0
+        amount: 0,
+        isCredit: false,
+        creditRef: ""
       })
     }
+  }
+
+  const handleDeleteExpense = (index: number) => {
+    setExpenses(expenses.filter((_, i) => i !== index))
+  }
+
+  const handleUpdateExpense = (index: number, updatedExpense: Partial<ProjectExpense>) => {
+    setExpenses(expenses.map((expense, i) => i === index ? { ...expense, ...updatedExpense } : expense))
   }
 
   const handleAddLabor = () => {
@@ -59,9 +73,19 @@ export default function ProjectsPage() {
         role: "",
         hours: 0,
         rate: 0,
-        amount: 0
+        amount: 0,
+        isCredit: false,
+        creditRef: ""
       })
     }
+  }
+
+  const handleDeleteLabor = (index: number) => {
+    setLaborCosts(laborCosts.filter((_, i) => i !== index))
+  }
+
+  const handleUpdateLabor = (index: number, updatedLabor: Partial<LaborCost>) => {
+    setLaborCosts(laborCosts.map((labor, i) => i === index ? { ...labor, ...updatedLabor } : labor))
   }
 
   const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0)
