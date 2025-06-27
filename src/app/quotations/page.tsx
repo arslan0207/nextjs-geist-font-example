@@ -26,7 +26,9 @@ export default function QuotationsPage() {
     attention: "",
     validity: "",
     paymentTerms: "",
-    terms: ""
+    terms: "",
+    isCreditQuotation: false,
+    creditQuotationRef: ""
   })
   const [newItem, setNewItem] = useState<QuotationItem>({
     code: "",
@@ -48,6 +50,14 @@ export default function QuotationsPage() {
         amount: 0
       })
     }
+  }
+
+  const handleDeleteItem = (index: number) => {
+    setItems(items.filter((_, i) => i !== index))
+  }
+
+  const handleUpdateItem = (index: number, updatedItem: Partial<QuotationItem>) => {
+    setItems(items.map((item, i) => i === index ? { ...item, ...updatedItem } : item))
   }
 
   const subtotal = items.reduce((sum, item) => sum + item.amount, 0)
@@ -228,6 +238,29 @@ export default function QuotationsPage() {
                     <td className="text-right p-2">{item.quantity}</td>
                     <td className="text-right p-2">{formatCurrency(item.unitPrice)}</td>
                     <td className="text-right p-2">{formatCurrency(item.amount)}</td>
+                    <td className="p-2 flex space-x-2">
+                      <button
+                        className="text-blue-600 hover:underline"
+                        onClick={() => {
+                          const newDescription = prompt("Edit Description", item.description)
+                          if (newDescription !== null) {
+                            handleUpdateItem(index, { description: newDescription })
+                          }
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="text-red-600 hover:underline"
+                        onClick={() => {
+                          if (confirm("Are you sure you want to delete this item?")) {
+                            handleDeleteItem(index)
+                          }
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
