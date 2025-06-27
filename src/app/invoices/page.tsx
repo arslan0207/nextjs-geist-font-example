@@ -38,7 +38,9 @@ export default function InvoicesPage() {
     projectId: "",
     customer: "",
     customerId: "",
-    attention: ""
+    attention: "",
+    isCreditInvoice: false,
+    creditInvoiceRef: ""
   })
 
   // Financial controls
@@ -89,6 +91,14 @@ export default function InvoicesPage() {
         amount: 0
       })
     }
+  }
+
+  const handleDeleteItem = (index: number) => {
+    setItems(items.filter((_, i) => i !== index))
+  }
+
+  const handleUpdateItem = (index: number, updatedItem: Partial<InvoiceItem>) => {
+    setItems(items.map((item, i) => i === index ? { ...item, ...updatedItem } : item))
   }
 
   const handleCustomerChange = (customerId: string) => {
@@ -245,6 +255,25 @@ export default function InvoicesPage() {
                 placeholder="ATTN: Contact Person" 
               />
             </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="credit-invoice"
+                checked={invoiceData.isCreditInvoice}
+                onCheckedChange={(checked) => setInvoiceData({ ...invoiceData, isCreditInvoice: !!checked })}
+              />
+              <Label htmlFor="credit-invoice">Credit Invoice</Label>
+            </div>
+            {invoiceData.isCreditInvoice && (
+              <div>
+                <Label htmlFor="credit-invoice-ref">Credit Invoice Reference</Label>
+                <Input
+                  id="credit-invoice-ref"
+                  value={invoiceData.creditInvoiceRef}
+                  onChange={(e) => setInvoiceData({ ...invoiceData, creditInvoiceRef: e.target.value })}
+                  placeholder="Reference Invoice Number"
+                />
+              </div>
+            )}
           </div>
         </Card>
 
@@ -480,6 +509,29 @@ export default function InvoicesPage() {
                     <td className="text-right p-2">{item.quantity}</td>
                     <td className="text-right p-2">{formatCurrency(item.unitPrice)}</td>
                     <td className="text-right p-2">{formatCurrency(item.amount)}</td>
+                    <td className="p-2 flex space-x-2">
+                      <button
+                        className="text-blue-600 hover:underline"
+                        onClick={() => {
+                          const newDescription = prompt("Edit Description", item.description)
+                          if (newDescription !== null) {
+                            handleUpdateItem(index, { description: newDescription })
+                          }
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="text-red-600 hover:underline"
+                        onClick={() => {
+                          if (confirm("Are you sure you want to delete this item?")) {
+                            handleDeleteItem(index)
+                          }
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
